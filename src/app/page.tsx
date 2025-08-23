@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export default function Home() { return (<main><h1>BrainDump</h1></main>); }
-=======
 'use client';
 
 import { useState } from 'react';
@@ -172,4 +169,3 @@ export default function HomePage() {
     </div>
   );
 }
->>>>>>> c57b849 (Initial commit: BrainDump AI voice-to-text application)

@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export default function RootLayout({ children }: { children: React.ReactNode }) { return (<html lang="en"><body>{children}</body></html>); }
-=======
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -62,4 +59,3 @@ export default function RootLayout({
     </html>
   );
 }
->>>>>>> c57b849 (Initial commit: BrainDump AI voice-to-text application)

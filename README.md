@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-# BrainDump
-
-AI voice-to-text app scaffolded by an assistant.
-
-See project files for usage.
-=======
 # BrainDump - Voice to Text Application
 
 Transform your thoughts into polished text instantly. BrainDump converts voice recordings into well-structured, professional text using AI.
@@ -233,4 +226,3 @@ For issues and questions:
 ---
 
 **BrainDump** - Transform your thoughts into polished text ✨
->>>>>>> c57b849 (Initial commit: BrainDump AI voice-to-text application)

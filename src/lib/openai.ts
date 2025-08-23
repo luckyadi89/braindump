@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export async function transcribeAudio() { return { text: 'transcript' }; }
-=======
 import OpenAI from 'openai';
 
 // This should only be used server-side
@@ -103,4 +100,3 @@ export const defaultWritingStyles = [
     prompt: 'Convert this into academic prose. Use formal language, proper structure, and scholarly tone while maintaining the original ideas and arguments.'
   }
 ];
->>>>>>> c57b849 (Initial commit: BrainDump AI voice-to-text application)

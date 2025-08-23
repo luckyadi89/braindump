@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export async function POST(req) { return new Response(JSON.stringify({ transcript: 'example', enhanced: 'example enhanced' }), { status: 200 }); }
-=======
 import { NextRequest, NextResponse } from 'next/server';
 import { transcribeAudio, enhanceText } from '@/lib/openai';
 
@@ -53,4 +50,3 @@ export const config = {
     bodyParser: false,
   },
 };
->>>>>>> c57b849 (Initial commit: BrainDump AI voice-to-text application)
