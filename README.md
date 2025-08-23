@@ -1,2 +1,5 @@
-# braindump
-BrainDump — AI voice-to-text app (Next.js, TypeScript, Supabase, OpenAI)
+# BrainDump
+
+AI voice-to-text app scaffolded by an assistant.
+
+See project files for usage.

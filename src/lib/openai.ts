@@ -1,0 +1,1 @@
+export async function transcribeAudio() { return { text: 'transcript' }; }

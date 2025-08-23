@@ -1,0 +1,1 @@
+export async function POST(req) { return new Response(JSON.stringify({ transcript: 'example', enhanced: 'example enhanced' }), { status: 200 }); }
