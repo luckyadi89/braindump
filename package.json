@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{ "name": "braindump", "version": "0.1.0", "private": true }
-=======
 {
   "name": "braindump",
   "version": "0.1.0",
@@ -33,4 +30,3 @@
     "typescript": "^5"
   }
 }
->>>>>>> c57b849 (Initial commit: BrainDump AI voice-to-text application)
