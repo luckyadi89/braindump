@@ -4,9 +4,25 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:beta": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=beta next dev",
+    "dev:prod": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=production next dev",
     "build": "next build",
+    "build:beta": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=beta next build",
+    "build:prod": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=production next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"Add your test command here\"",
+    "test:ci": "npm run test",
+    "test:full": "npm run test && npm run type-check && npm run lint",
+    "test:e2e": "echo \"Add E2E test command here\"",
+    "test:production": "npm run test:full && npm run test:e2e",
+    "test:smoke-beta": "echo \"Add beta smoke tests here\"",
+    "test:smoke-prod": "echo \"Add production smoke tests here\"",
+    "analyze": "ANALYZE=true npm run build",
+    "env:copy-dev": "cp .env.development .env.local",
+    "env:copy-beta": "cp .env.beta .env.local",
+    "env:copy-prod": "cp .env.production .env.local"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
