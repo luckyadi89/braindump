@@ -44,7 +44,6 @@ jobs:
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_BETA }}
         working-directory: ./
-        scope: ${{ secrets.VERCEL_ORG_ID }}
         vercel-args: '--env NODE_ENV=production --prod'
     
     - name: Run Beta Smoke Tests
