@@ -7,11 +7,12 @@ import { NoteDisplay } from '@/components/NoteDisplay';
 import { AuthForm } from '@/components/AuthForm';
 import { UserDashboard } from '@/components/UserDashboard';
 import { auth } from '@/lib/supabase-auth';
-import { Mic, Brain, Sparkles, LogOut } from 'lucide-react';
+import { Mic, Brain, Sparkles, LogOut, Clock } from 'lucide-react';
 
 export default function HomePage() {
   const [user, setUser] = useState<any>(null);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const [showAuth, setShowAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState<'record' | 'process' | 'display'>('record');
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
@@ -21,6 +22,10 @@ export default function HomePage() {
     wordCount: number;
     processingTime: number;
   } | null>(null);
+
+  // Recording limits based on authentication
+  const maxDuration = user ? 180 : 30; // 3 minutes for logged in, 30 seconds for guests
+  const durationText = user ? '3 minutes' : '30 seconds';
 
   useEffect(() => {
     checkAuth();
@@ -38,6 +43,7 @@ export default function HomePage() {
   };
 
   const handleAuthSuccess = () => {
+    setShowAuth(false);
     checkAuth();
   };
 
@@ -92,52 +98,65 @@ export default function HomePage() {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="flex justify-center items-center mb-4">
-              <div className="p-3 bg-orange-100 rounded-full">
-                <Brain className="w-8 h-8 text-orange-500" />
-              </div>
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Brain<span className="text-orange-500">Dump</span>
-            </h1>
-            <p className="text-gray-600">Voice to Text</p>
-          </div>
-          <AuthForm
-            mode={authMode}
-            onModeChange={setAuthMode}
-            onSuccess={handleAuthSuccess}
-          />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto py-8 px-4">
-        {/* User Header */}
+        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-gray-900">
-              Welcome back, {user.email?.split('@')[0]}!
+              Welcome{user ? `, ${user.email?.split('@')[0]}` : ''}!
             </h1>
+            {!user && (
+              <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                Guest Mode
+              </span>
+            )}
           </div>
           <div className="flex items-center space-x-4">
-            <UserDashboard />
-            <button
-              onClick={handleSignOut}
-              className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sign Out</span>
-            </button>
+            {user ? (
+              <>
+                <UserDashboard />
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setShowAuth(true)}
+                className="flex items-center space-x-2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+              >
+                <span>Sign In</span>
+              </button>
+            )}
           </div>
         </div>
+
+        {/* Auth Modal */}
+        {showAuth && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Sign In to Unlock Full Features</h2>
+                <button
+                  onClick={() => setShowAuth(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  ✕
+                </button>
+              </div>
+              <AuthForm
+                mode={authMode}
+                onModeChange={setAuthMode}
+                onSuccess={handleAuthSuccess}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Hero Section */}
         <div className="text-center mb-12">
@@ -149,13 +168,22 @@ export default function HomePage() {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Transform Your Voice into Polished Text
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
             Record your thoughts, ideas, and notes. Our AI will transcribe and enhance them into
             clear, well-structured text ready for sharing.
           </p>
-        </div>
-
-        {/* Step Indicator */}
+          {!user && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto">
+              <div className="flex items-center justify-center space-x-2 text-blue-700 mb-2">
+                <Clock className="w-5 h-5" />
+                <span className="font-medium">Guest Mode: {durationText} recording limit</span>
+              </div>
+              <p className="text-blue-600 text-sm">
+                Sign in to unlock 3-minute recordings and save your notes to the cloud!
+              </p>
+            </div>
+          )}
+        </div>        {/* Step Indicator */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center space-x-4">
             <div className={`flex items-center space-x-2 ${currentStep === 'record' ? 'text-orange-500' : currentStep === 'process' || currentStep === 'display' ? 'text-green-500' : 'text-gray-400'}`}>
@@ -191,7 +219,7 @@ export default function HomePage() {
             <div>
               <AudioRecorder
                 onRecordingComplete={handleRecordingComplete}
-                maxDuration={180} // 3 minutes
+                maxDuration={maxDuration}
               />
 
               {/* Features List */}
@@ -201,7 +229,7 @@ export default function HomePage() {
                     <Mic className="w-6 h-6 text-blue-600" />
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">High-Quality Recording</h3>
-                  <p className="text-gray-600 text-sm">Record up to 3 minutes of crystal clear audio with our advanced recording system.</p>
+                  <p className="text-gray-600 text-sm">Record up to {durationText} of crystal clear audio with our advanced recording system.</p>
                 </div>
 
                 <div className="text-center p-6 bg-white rounded-lg shadow-sm border">
