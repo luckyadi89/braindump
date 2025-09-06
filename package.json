@@ -10,7 +10,7 @@
     "build:beta": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=beta next build",
     "build:prod": "NODE_ENV=production NEXT_PUBLIC_APP_ENV=production next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "test": "echo \"✅ Tests passed - No tests implemented yet\"",
     "test:ci": "npm run type-check && npm run lint",
@@ -36,6 +36,7 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

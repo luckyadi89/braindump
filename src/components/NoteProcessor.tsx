@@ -70,7 +70,7 @@ export function NoteProcessor({
 
   useEffect(() => {
     processAudio();
-  }, [audioBlob]);
+  }, [audioBlob]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex flex-col items-center space-y-6 p-6 bg-white rounded-lg shadow-lg border">
